@@ -2,12 +2,15 @@ const dotenv = require("dotenv").config();
 const path = require("path");
 const session = require("express-session");
 const morgan = require("morgan");
-//const passportAuth = require("./config/auth");
+const passport = require("passport");
+require("./config/auth");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const funcs = require("./utils/funcs");
 
 const postRouter = require("./routes/postRoute");
+const commentRouter = require("./routes/commentRoute");
 
 const uri = process.env.MONGO_URI;
 const port = process.env.PORT || 3000;
@@ -36,9 +39,25 @@ app.use(
     saveUninitialized: false,
   })
 );
-//app.use(passportAuth.authenticate("session"));
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile"],
+  })
+);
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/",
+    successRedirect: "/hello",
+  })
+);
+app.use(funcs.checkAuthenticated);
 app.use("/posts", postRouter);
+app.use("/comments", commentRouter);
 
 app.listen(port, () => {
   console.log(`Server listening at port ${port}`);
