@@ -8,3 +8,10 @@ exports.validationError = (req, res, next) => {
     next();
   }
 };
+exports.checkAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(401).json({ status: "Unauthorized access" });
+  }
+};
