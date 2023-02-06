@@ -16,8 +16,7 @@ exports.comment_list_by_blog = async (req, res) => {
 
 exports.comment_create = async (req, res) => {
   try {
-    const userId = mongoose.Types.ObjectId(req.body.user);
-    const comment = new Comment({ author: userId, body: req.body.body });
+    const comment = new Comment({ author: req.user.id, body: req.body.body });
     const postId = mongoose.Types.ObjectId(req.params.id);
     await Post.findAndUpdate({ _id: postId }, { $push: { comments: comment } });
     res.json({ status: "Comment created" });
