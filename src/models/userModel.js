@@ -5,6 +5,7 @@ const userSchema = new Schema({
   googleId: { type: Number, required: true },
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
+  photo: { type: String },
   posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
 });
