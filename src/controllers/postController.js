@@ -43,8 +43,7 @@ exports.post_list_by_user = async (req, res) => {
 exports.post_create = async (req, res) => {
   try {
     const { title, body } = req.body;
-    const userId = mongoose.Types.ObjectId(req.params.id);
-    const post = new Post({ title, userId, body });
+    const post = new Post({ title: title, author: req.user.id, body: body });
     await post.save();
     res.json({ status: "Post created" });
   } catch (error) {
@@ -56,7 +55,7 @@ exports.post_update = async (req, res) => {
   try {
     const postUpdateObj = parseBody(req.body);
     const post = await Post.findOneAndUpdate(
-      { _id: mongoose.Types.ObjectId(req.params.id) },
+      { _id: req.user.id },
       postUpdateObj
     );
     res.json({ status: "Post updated" });
@@ -68,7 +67,7 @@ exports.post_update = async (req, res) => {
 exports.post_delete = async (req, res) => {
   try {
     const post = await Post.findOneAndDelete({
-      _id: mongoose.Types.ObjectId(req.params.id),
+      _id: req.user.id,
     });
     res.json({ status: "Post deleted" });
   } catch (error) {
