@@ -1,27 +1,33 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { initUser, userContext } from '../contexts/userContext';
+import { initUser, UserContext } from '../contexts/UserContext';
+import Login from './Login';
 import Navbar from './Navbar';
+import Posts from './Posts';
 const RouteSwitch = () => {
   const [user, setUser] = useState<User>(initUser);
   return (
-    <userContext.Provider value={{ user, setUser }}>
-      <BrowserRouter basename="/home">
+    <UserContext.Provider value={{ user, setUser }}>
+      <BrowserRouter>
         <Navbar />
-        <Routes>
+        {/* <Routes>
           <Route path="/posts">
-            <Route path="/:id" />
-            <Route path="/all" />
+            <Route path="/posts/:id" />
+            <Route path="/posts/all" />
           </Route>
           <Route path="/user">
-            <Route path=":id" />
+            <Route path="/user/:id" />
           </Route>
           <Route path="/login" />
           <Route path="/profile" />
+        </Routes> */}
+        <Routes>
+          <Route path="/" element={<Posts />}></Route>
+          <Route path="/login" element={<Login />}></Route>
         </Routes>
       </BrowserRouter>
-    </userContext.Provider>
+    </UserContext.Provider>
   );
 };
 
