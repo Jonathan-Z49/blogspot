@@ -1,4 +1,5 @@
-import './css/index.css';
+import 'modern-normalize';
+import './css/App.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
