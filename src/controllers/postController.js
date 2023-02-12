@@ -55,7 +55,7 @@ exports.post_update = async (req, res) => {
   try {
     const postUpdateObj = parseBody(req.body);
     const post = await Post.findOneAndUpdate(
-      { _id: req.user.id },
+      { _id: req.params.id },
       postUpdateObj
     );
     res.json({ status: "Post updated" });
@@ -66,9 +66,14 @@ exports.post_update = async (req, res) => {
 
 exports.post_delete = async (req, res) => {
   try {
-    const post = await Post.findOneAndDelete({
-      _id: req.user.id,
+    const post = await Post.findOne({
+      _id: req.params.id,
     });
+    if (req.user.id == post.author) {
+      const postToDelete = await Post.findOneAndDelete({ _id: req.params.id });
+    } else {
+      res.json({ status: "Unauthorized access" });
+    }
     res.json({ status: "Post deleted" });
   } catch (error) {
     console.error(error);
