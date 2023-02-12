@@ -2,15 +2,15 @@ const dotenv = require("dotenv").config();
 const path = require("path");
 const session = require("express-session");
 const morgan = require("morgan");
-const passport = require("passport");
-require("./config/auth");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const passport = require("passport");
 const funcs = require("./utils/funcs");
 
 const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
+const authRouter = require("./routes/authRoute");
 
 const uri = process.env.MONGO_URI;
 const port = process.env.PORT || 3000;
@@ -28,7 +28,7 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: process.env.CLIENT_ORIGIN }));
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -42,19 +42,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile"],
-  })
-);
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/",
-    successRedirect: "/hello",
-  })
-);
+app.use("/", authRouter);
 app.use(funcs.checkAuthenticated);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
