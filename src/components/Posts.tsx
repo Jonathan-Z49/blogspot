@@ -1,10 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { UserContext } from '../contexts/UserContext';
-import { getUserData } from '../utils/api';
+import { getAllPosts, getUserData } from '../utils/api';
+import PostModal from './PostModal';
 
 const Posts = () => {
   const { user, setUser } = useContext(UserContext);
+  const [posts, setPosts] = useState<Post[]>();
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const fetchUser = async () => {
     try {
@@ -20,19 +23,42 @@ const Posts = () => {
             logged_in: true,
           });
         }
-        console.log(user);
-        console.log(userData);
+        console.log(user.photo);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleClickOffOverlay = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    overlayRef.current?.classList.remove('active');
+  };
+
+  const handleClickAddPost = () => {
+    overlayRef.current?.classList.add('active');
+  };
+
   useEffect(() => {
     fetchUser();
+    getAllPosts().then((posts) => {
+      setPosts(posts);
+    });
   }, []);
 
-  return <div>Posts</div>;
+  return (
+    <main className="posts-container">
+      <section className="posts-controls">
+        <button className="posts-add-btn" onClick={handleClickAddPost}>
+          Add Blog
+        </button>
+      </section>
+      <section className="posts"></section>
+      <div className="modal-overlay" ref={overlayRef} onClick={handleClickOffOverlay}>
+        <PostModal clickOffOverlay={handleClickOffOverlay} />
+      </div>
+    </main>
+  );
 };
 
 export default Posts;
