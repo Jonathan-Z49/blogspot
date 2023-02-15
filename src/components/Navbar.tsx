@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import { UserContext } from '../contexts/UserContext';
+
 const Navbar = () => {
+  const { user, setUser } = useContext(UserContext);
+
   return (
     <nav className="navbar">
       <ul className="navbar-list">
@@ -14,9 +18,17 @@ const Navbar = () => {
         <li className="navbar-link">
           <Link to="/profile">Profile</Link>
         </li>
-        <li className="navbar-link">
-          <Link to="/login">Sign in</Link>
-        </li>
+        {user.logged_in ? (
+          <li className="navbar-link">
+            <Link to="/profile">
+              <img src={user.photo} className="navbar-profile-logo" alt="User logo" />
+            </Link>
+          </li>
+        ) : (
+          <li className="navbar-link">
+            <Link to="/login">Sign in</Link>
+          </li>
+        )}
       </ul>
     </nav>
   );
