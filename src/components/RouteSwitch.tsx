@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { initUser, UserContext } from '../contexts/UserContext';
 import Login from './Login';
 import Navbar from './Navbar';
-import Posts from './Posts';
+import PostsContainer from './PostsContainer';
 const RouteSwitch = () => {
   const [user, setUser] = useState<User>(initUser);
   return (
@@ -23,7 +23,7 @@ const RouteSwitch = () => {
           <Route path="/profile" />
         </Routes> */}
         <Routes>
-          <Route path="/" element={<Posts />}></Route>
+          <Route path="/" element={<PostsContainer />}></Route>
           <Route path="/login" element={<Login />}></Route>
         </Routes>
       </BrowserRouter>

@@ -9,7 +9,7 @@ export const initUser: User = {
   logged_in: false,
 };
 
-export const userContext = createContext<{
+export const UserContext = createContext<{
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
   // eslint-disable-next-line @typescript-eslint/no-empty-function
