@@ -39,6 +39,14 @@ body {
     width: 100%;
     border-radius: 100%;
   }
+  &-logout-btn {
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
   &-list {
     height: 100%;
     width: 100%;
