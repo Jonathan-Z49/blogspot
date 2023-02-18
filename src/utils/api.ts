@@ -155,3 +155,19 @@ export async function getUserData() {
     console.error(error);
   }
 }
+
+export async function userLogout() {
+  try {
+    const response = await fetch(`http://localhost:5000/logout`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const json_response: { status: string } = await response.json();
+    console.log(json_response);
+
+    return json_response;
+  } catch (error) {
+    console.error(error);
+  }
+}
