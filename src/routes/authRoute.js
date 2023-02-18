@@ -13,7 +13,13 @@ router.get("/login/success", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.logout();
+  req.logout(function (err) {
+    if (err) {
+      console.error(err);
+    } else {
+      res.json({ status: "Logged out" });
+    }
+  });
 });
 
 router.get(
