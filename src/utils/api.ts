@@ -12,7 +12,7 @@ export async function getAllPosts() {
   }
 }
 
-export async function getPostsById(id: string) {
+export async function getPostById(id: string) {
   try {
     const response = await fetch(`http://localhost:5000/posts/${id}`, {
       method: 'GET',
@@ -72,13 +72,16 @@ export async function updatePost(post: { title?: string; body?: string }, id: st
 
 export async function deletePost(id: string) {
   try {
-    const response = await fetch(`http://localhost:5000/posts/${id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const json_response = await response.json();
-    return json_response;
+    if (id) {
+      const response = await fetch(`http://localhost:5000/posts/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const json_response = await response.json();
+      return json_response;
+    }
+    return;
   } catch (error) {
     console.error(error);
   }
