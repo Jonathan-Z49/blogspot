@@ -15,7 +15,6 @@ passport.use(
         const { id, given_name, family_name } = profile;
         const photo_url = profile.photos[0].value;
         const existing_user = await User.findOne({ googleId: id });
-
         if (!existing_user) {
           const new_user = new User({
             googleId: id,
@@ -27,7 +26,6 @@ passport.use(
           await new_user.save();
           return done(null, new_user);
         }
-
         return done(null, existing_user);
       } catch (error) {
         console.error(error);
@@ -41,6 +39,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const currentUser = await User.findOne({ id });
+  const currentUser = await User.findOne({ _id: id });
   done(null, currentUser);
 });
