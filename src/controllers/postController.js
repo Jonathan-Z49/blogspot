@@ -5,7 +5,14 @@ exports.post_list_all = async (req, res) => {
   try {
     const all_posts = await Post.find({})
       .sort({ date: 1 })
-      .populate("author comments");
+      .populate([
+        { path: "author", model: "User" },
+        {
+          path: "comments",
+          model: "Comment",
+          populate: { path: "author", model: "User" },
+        },
+      ]);
     res.json(all_posts);
   } catch (error) {
     console.error(error);
@@ -18,7 +25,14 @@ exports.post_list_by_id = async (req, res) => {
       _id: mongoose.Types.ObjectId(req.params.id),
     })
       .sort({ date: 1 })
-      .populate("author comments");
+      .populate([
+        { path: "author", model: "User" },
+        {
+          path: "comments",
+          model: "Comment",
+          populate: { path: "author", model: "User" },
+        },
+      ]);
     res.json(post);
   } catch (error) {
     console.error(error);
@@ -33,7 +47,14 @@ exports.post_list_by_user = async (req, res) => {
       .sort({
         date: 1,
       })
-      .populate("author comments");
+      .populate([
+        { path: "author", model: "User" },
+        {
+          path: "comments",
+          model: "Comment",
+          populate: { path: "author", model: "User" },
+        },
+      ]);
     res.json(all_posts);
   } catch (error) {
     console.error(error);
@@ -45,7 +66,11 @@ exports.post_create = async (req, res) => {
     const { title, body } = req.body;
     const post = new Post({ title: title, author: req.user.id, body: body });
     await post.save();
-    res.json({ status: "Post created" });
+    await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $push: { posts: mongoose.Types.ObjectId(post.id) } }
+    );
+    res.json({ status: "Post created", new_post: post });
   } catch (error) {
     console.error(error);
   }
@@ -53,12 +78,19 @@ exports.post_create = async (req, res) => {
 
 exports.post_update = async (req, res) => {
   try {
-    const postUpdateObj = parseBody(req.body);
-    const post = await Post.findOneAndUpdate(
-      { _id: req.params.id },
-      postUpdateObj
-    );
-    res.json({ status: "Post updated" });
+    const post = await Post.findOne({
+      _id: req.params.id,
+    });
+    if (req.user.id == post.author) {
+      const postUpdateObj = parseBody(req.body);
+      const postToUpdate = await Post.findOneAndUpdate(
+        { _id: req.params.id },
+        postUpdateObj
+      );
+      res.json({ status: "Post updated", updated_post: postToUpdate });
+    } else {
+      res.json({ status: "Unauthorized access" });
+    }
   } catch (error) {
     console.error(error);
   }
@@ -71,6 +103,10 @@ exports.post_delete = async (req, res) => {
     });
     if (req.user.id == post.author) {
       const postToDelete = await Post.findOneAndDelete({ _id: req.params.id });
+      await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $pull: { posts: req.params.id } }
+      );
     } else {
       res.json({ status: "Unauthorized access" });
     }
