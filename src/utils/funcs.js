@@ -9,7 +9,7 @@ exports.validationError = (req, res, next) => {
   }
 };
 exports.checkAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() || req.method == "GET") {
     next();
   } else {
     res.status(401).json({ status: "Unauthorized access" });
