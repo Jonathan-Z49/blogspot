@@ -10,8 +10,6 @@ const Navbar = () => {
   const handleClickLogout = async () => {
     const statusObj = (await userLogout()) as { status: string };
     if (statusObj.status == 'Logged out') {
-      console.log(statusObj);
-
       setUser(initUser);
     }
   };
@@ -23,10 +21,7 @@ const Navbar = () => {
           <Link to="/">Blogspot</Link>
         </li>
         <li className="navbar-link">
-          <Link to="/posts">Blogs</Link>
-        </li>
-        <li className="navbar-link">
-          <Link to="/profile">Profile</Link>
+          <Link to="/">Blogs</Link>
         </li>
         {user.logged_in ? (
           <>
@@ -36,9 +31,12 @@ const Navbar = () => {
               </button>
             </li>
             <li className="navbar-link">
-              <Link to="/profile">
-                <img src={user.photo} className="navbar-profile-logo" alt="User logo" />
-              </Link>
+              <img
+                src={user.photo}
+                className="navbar-profile-logo"
+                referrerPolicy="no-referrer"
+                alt="User logo"
+              />
             </li>
           </>
         ) : (
