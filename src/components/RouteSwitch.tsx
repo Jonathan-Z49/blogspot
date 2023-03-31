@@ -11,19 +11,20 @@ const RouteSwitch = () => {
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Navbar />
-        {/* <Routes>
-          <Route path="/posts">
-            <Route path="/posts/:id" />
-            <Route path="/posts/all" />
-          </Route>
-          <Route path="/user">
-            <Route path="/user/:id" />
-          </Route>
-          <Route path="/login" />
-          <Route path="/profile" />
-        </Routes> */}
         <Routes>
-          <Route path="/" element={<PostsContainer />}></Route>
+          <Route path="/">
+            <Route
+              index={true}
+              element={<PostsContainer single_post={false} all_posts={true} />}
+            />
+          </Route>
+          <Route path="/posts">
+            <Route
+              index={true}
+              path=":id"
+              element={<PostsContainer single_post={true} all_posts={false} />}
+            />
+          </Route>
           <Route path="/login" element={<Login />}></Route>
         </Routes>
       </BrowserRouter>
