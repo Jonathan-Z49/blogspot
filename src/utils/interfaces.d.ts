@@ -1,23 +1,25 @@
 interface User {
+  _id: string;
   first_name: string;
   last_name: string;
   photo: string;
   posts: Post[];
-  comments: Comment[];
+  comments: Comments[];
   logged_in: boolean;
 }
 
-interface Comment {
+interface Comments {
+  _id: string;
   author: User;
   body: string;
-  date: Date;
+  date: string;
 }
 
 interface Post {
-  id: string;
+  _id: string;
   title: string;
   body: string;
   author: User;
-  date: Date;
-  comments: Comment[];
+  date: string;
+  comments: Comments[];
 }
