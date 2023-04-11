@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 
 export const initUser: User = {
+  _id: '',
   first_name: '',
   last_name: '',
   photo: '',

@@ -27,7 +27,7 @@ const PostModal = forwardRef<HTMLFormElement, Props>(function PostModal(props, r
     }
   }, [props.mode.postToEdit]);
 
-  const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreatePost = async (e: React.MouseEvent<HTMLFormElement, MouseEvent>) => {
     try {
       if (!user.logged_in) {
         setError('Error! You are not signed in!');
@@ -46,7 +46,7 @@ const PostModal = forwardRef<HTMLFormElement, Props>(function PostModal(props, r
     }
   };
 
-  const handleEditPost = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEditPost = async (e: React.MouseEvent<HTMLFormElement, MouseEvent>) => {
     try {
       if (!user.logged_in) {
         setError('Error! You are not signed in!');
@@ -68,7 +68,7 @@ const PostModal = forwardRef<HTMLFormElement, Props>(function PostModal(props, r
     }
   };
 
-  const handleClickSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClickSubmit = (e: React.MouseEvent<HTMLFormElement, MouseEvent>) => {
     e.preventDefault();
     switch (props.mode.status) {
       case 'CREATE':

@@ -17,7 +17,9 @@ const CommentModalForm = forwardRef<HTMLFormElement, Props>(function CommentModa
 
   const { id } = useParams();
 
-  const handleCreateComment = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateComment = async (
+    e: React.MouseEvent<HTMLFormElement, MouseEvent>,
+  ) => {
     e.preventDefault();
     try {
       if (!user.logged_in) {

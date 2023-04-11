@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import { initUser, UserContext } from '../contexts/UserContext';
 import Login from './Login';
@@ -9,7 +9,7 @@ const RouteSwitch = () => {
   const [user, setUser] = useState<User>(initUser);
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <BrowserRouter>
+      <HashRouter basename="/">
         <Navbar />
         <Routes>
           <Route path="/">
@@ -27,7 +27,7 @@ const RouteSwitch = () => {
           </Route>
           <Route path="/login" element={<Login />}></Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </UserContext.Provider>
   );
 };
