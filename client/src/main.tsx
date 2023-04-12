@@ -7,9 +7,7 @@ import ReactDOM from 'react-dom';
 
 import RouteSwitch from './components/RouteSwitch';
 
-if (import.meta.env.NODE_ENV === 'production') {
-  disableReactDevTools();
-}
+disableReactDevTools();
 
 ReactDOM.render(
   <React.StrictMode>
