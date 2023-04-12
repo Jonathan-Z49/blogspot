@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { initUser, UserContext } from '../contexts/UserContext';
@@ -13,6 +13,9 @@ const Navbar = () => {
       setUser(initUser);
     }
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [user._id]);
 
   return (
     <nav className="navbar">

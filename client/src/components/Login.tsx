@@ -3,10 +3,7 @@ import React from 'react';
 import googlesvg from '../google.svg';
 const Login = () => {
   const handleGoogle = () => {
-    window.open(
-      'https://blog-server-production-82ec.up.railway.app/auth/google',
-      '_self',
-    );
+    window.open(`${import.meta.env.SERVER_URL}/auth/google`, '_self');
   };
 
   return (

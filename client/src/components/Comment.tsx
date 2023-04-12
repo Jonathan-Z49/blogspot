@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { UserContext } from '../contexts/UserContext';
 
 interface Props {
   comment: Comments;
@@ -6,7 +8,7 @@ interface Props {
 }
 
 const Comment = (props: Props) => {
-  console.log(props);
+  const { user, setUser } = useContext(UserContext);
 
   const handleClickDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -30,9 +32,11 @@ const Comment = (props: Props) => {
               props.comment.author.last_name.slice(0, 1)}
           </span>
           <span className="comment-item-date">{props.comment.date.slice(0, 10)}</span>
-          <button className="comment-delete-btn" onClick={handleClickDelete}>
-            Delete
-          </button>
+          {user._id == props.comment.author._id && (
+            <button className="comment-delete-btn" onClick={handleClickDelete}>
+              Delete
+            </button>
+          )}
         </div>
       </section>
     </div>
