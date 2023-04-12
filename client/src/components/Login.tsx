@@ -4,7 +4,7 @@ import googlesvg from '../google.svg';
 const Login = () => {
   const handleGoogle = () => {
     window.open(
-      'https://blog-server-production-82ec.up.railway.app:5000/auth/google',
+      'https://blog-server-production-82ec.up.railway.app/auth/google',
       '_self',
     );
   };
