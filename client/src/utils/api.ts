@@ -1,6 +1,6 @@
 export async function getAllPosts() {
   try {
-    const response = await fetch('${import.meta.env.SERVER_URL}/posts', {
+    const response = await fetch('https://blogspot-api-8log.onrender.com/posts', {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -14,7 +14,7 @@ export async function getAllPosts() {
 
 export async function getPostById(id: string) {
   try {
-    const response = await fetch(`${import.meta.env.SERVER_URL}/posts/${id}`, {
+    const response = await fetch(`https://blogspot-api-8log.onrender.com/posts/${id}`, {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -28,11 +28,14 @@ export async function getPostById(id: string) {
 
 export async function getPostsByUser(id: string) {
   try {
-    const response = await fetch(`${import.meta.env.SERVER_URL}/posts/user/${id}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      `https://blogspot-api-8log.onrender.com/posts/user/${id}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
     const json_response: Post[] = await response.json();
     return json_response;
   } catch (error) {
@@ -42,7 +45,7 @@ export async function getPostsByUser(id: string) {
 
 export async function createPost(post: { title: string; body: string }) {
   try {
-    const response = await fetch('${import.meta.env.SERVER_URL}/posts', {
+    const response = await fetch('https://blogspot-api-8log.onrender.com/posts', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -57,7 +60,7 @@ export async function createPost(post: { title: string; body: string }) {
 
 export async function updatePost(post: { title?: string; body?: string }, id: string) {
   try {
-    const response = await fetch(`${import.meta.env.SERVER_URL}/posts/${id}`, {
+    const response = await fetch(`https://blogspot-api-8log.onrender.com/posts/${id}`, {
       method: 'PUT',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -73,7 +76,7 @@ export async function updatePost(post: { title?: string; body?: string }, id: st
 export async function deletePost(id: string) {
   try {
     if (id) {
-      const response = await fetch(`${import.meta.env.SERVER_URL}/posts/${id}`, {
+      const response = await fetch(`https://blogspot-api-8log.onrender.com/posts/${id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -90,7 +93,7 @@ export async function deletePost(id: string) {
 export async function commentsByPost(postId: string) {
   try {
     const response = await fetch(
-      `${import.meta.env.SERVER_URL}/comments/posts/${postId}`,
+      `https://blogspot-api-8log.onrender.com/comments/posts/${postId}`,
       {
         method: 'GET',
         credentials: 'include',
@@ -107,7 +110,7 @@ export async function commentsByPost(postId: string) {
 export async function createComment(obj: { body: string }, postId: string) {
   try {
     const response = await fetch(
-      `${import.meta.env.SERVER_URL}/comments/posts/${postId}`,
+      `https://blogspot-api-8log.onrender.com/comments/posts/${postId}`,
       {
         method: 'POST',
         credentials: 'include',
@@ -124,12 +127,15 @@ export async function createComment(obj: { body: string }, postId: string) {
 
 export async function updateComment(obj: { body: string }, id: string) {
   try {
-    const response = await fetch(`${import.meta.env.SERVER_URL}/comments/${id}`, {
-      method: 'PUT',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(obj),
-    });
+    const response = await fetch(
+      `https://blogspot-api-8log.onrender.com/comments/${id}`,
+      {
+        method: 'PUT',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(obj),
+      },
+    );
     const json_response = await response.json();
     return json_response;
   } catch (error) {
@@ -139,11 +145,14 @@ export async function updateComment(obj: { body: string }, id: string) {
 
 export async function deleteComment(id: string) {
   try {
-    const response = await fetch(`${import.meta.env.SERVER_URL}/comments/${id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      `https://blogspot-api-8log.onrender.com/comments/${id}`,
+      {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
     const json_response = await response.json();
     return json_response;
   } catch (error) {
@@ -153,7 +162,7 @@ export async function deleteComment(id: string) {
 
 export async function getUserData() {
   try {
-    const response = await fetch(`${import.meta.env.SERVER_URL}/login/success`, {
+    const response = await fetch(`https://blogspot-api-8log.onrender.com/login/success`, {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -167,7 +176,7 @@ export async function getUserData() {
 
 export async function userLogout() {
   try {
-    const response = await fetch(`${import.meta.env.SERVER_URL}/logout`, {
+    const response = await fetch(`https://blogspot-api-8log.onrender.com/logout`, {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

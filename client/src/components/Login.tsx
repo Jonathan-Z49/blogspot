@@ -3,7 +3,7 @@ import React from 'react';
 import googlesvg from '../google.svg';
 const Login = () => {
   const handleGoogle = () => {
-    window.open(`${import.meta.env.SERVER_URL}/auth/google`, '_self');
+    window.open(`https://blogspot-api-8log.onrender.com/auth/google`, '_self');
   };
 
   return (
